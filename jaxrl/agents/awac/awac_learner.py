@@ -20,7 +20,7 @@ def _update_jit(
         rng: PRNGKey, actor: Model, critic: Model, target_critic: Model,
         batch: Batch, discount: float, tau: float, num_samples: int,
         beta: float,
-        update_target: bool) -> Tuple[PRNGKey, Model, Model, Model, InfoDict]:
+        update_target: bool, backup_entropy=False) -> Tuple[PRNGKey, Model, Model, Model, InfoDict]:
 
     rng, key = jax.random.split(rng)
     new_critic, critic_info = sac_critic.update(key,
@@ -30,7 +30,7 @@ def _update_jit(
                                                 None,
                                                 batch,
                                                 discount,
-                                                soft_critic=False)
+                                                backup_entropy=False)
     if update_target:
         new_target_critic = sac_critic.target_update(new_critic, target_critic,
                                                      tau)

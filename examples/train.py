@@ -6,7 +6,7 @@ import numpy as np
 import tqdm
 from absl import app, flags
 from ml_collections import config_flags
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
 
 from jaxrl.agents import (AWACLearner, DDPGLearner, REDQLearner, SACLearner,
                           SACV1Learner)

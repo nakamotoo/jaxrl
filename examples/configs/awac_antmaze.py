@@ -24,6 +24,6 @@ def get_config():
 
     config.num_samples = 1
 
-    config.replay_buffer_size = 2000000
+    config.replay_buffer_size = None
 
     return config

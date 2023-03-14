@@ -5,25 +5,35 @@ import gym
 import numpy as np
 
 
-def evaluate(agent, env: gym.Env, num_episodes: int) -> Dict[str, float]:
+def evaluate(agent: nn.Module, env: gym.Env,
+             num_episodes: int) -> Dict[str, float]:
     stats = {'return': [], 'length': []}
-    successes = None
+    returns = []
+    if env.spec.name in ['pen-binary', 'door-binary', 'relocate-binary']:
+        goal_achieved = []
     for _ in range(num_episodes):
         observation, done = env.reset(), False
+        rewards = []
+        infos = []
         while not done:
             action = agent.sample_actions(observation, temperature=0.0)
-            observation, _, done, info = env.step(action)
+            observation, rew, done, info = env.step(action)
+            rewards.append(rew)
+            infos.append(info)
+
         for k in stats.keys():
             stats[k].append(info['episode'][k])
-
-        if 'is_success' in info:
-            if successes is None:
-                successes = 0.0
-            successes += info['is_success']
+        returns.append(np.sum(rewards))
+        if env.spec.name in ['pen-binary', 'door-binary', 'relocate-binary']:
+            goal_achieved.append(int(np.any([i['goal_achieved'] for i in infos])))
 
     for k, v in stats.items():
         stats[k] = np.mean(v)
+    
+    stats["average_return"] = np.mean(returns)
+    if env.spec.name in ['pen-binary', 'door-binary', 'relocate-binary']:
+        stats["goal_achieved_rate"] = np.mean(goal_achieved)
+    else:
+        stats["average_normalizd_return"] = np.mean([env.get_normalized_score(ret) for ret in returns])
 
-    if successes is not None:
-        stats['success'] = successes / num_episodes
     return stats
