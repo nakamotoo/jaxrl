@@ -13,7 +13,7 @@ from jaxrl.utils import make_env, WandBLogger, get_user_flags
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string('env_name', 'HalfCheetah-v2', 'Environment name.')
-flags.DEFINE_enum('dataset_name', 'awac', ['d4rl', 'awac', 'adroit'], 'Dataset name.')
+flags.DEFINE_enum('dataset_name', 'awac', ['d4rl', 'awac', 'adroit-trunc', 'adroit'], 'Dataset name.')
 flags.DEFINE_string('save_dir', './tmp/', 'Tensorboard logging dir.')
 flags.DEFINE_integer('seed', 42, 'Random seed.')
 flags.DEFINE_integer('eval_episodes', 50,
@@ -107,6 +107,7 @@ def main(_):
             info = {}
             info['total'] = {'timesteps': i}
 
+        # initial evaluation
         if i == 1:
             eval_stats = evaluate(agent, env, FLAGS.eval_episodes)
             wandb_logger.log(eval_stats, step=0)
@@ -114,8 +115,10 @@ def main(_):
         batch = replay_buffer.sample(FLAGS.batch_size)
         update_info = agent.update(batch)
         grad_steps += 1
+
         if i % FLAGS.log_interval == 0:
-            wandb_logger.log({'env_steps': env_steps}, step=i)
+            if  i >= FLAGS.num_pretraining_steps:
+                wandb_logger.log({'env_steps': env_steps}, step=i)
             wandb_logger.log({'grad_steps': grad_steps}, step=i)
         #     for k, v in update_info.items():
         #         wandb_logger.log(f'training/{k}', v, i)

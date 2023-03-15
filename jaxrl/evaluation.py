@@ -33,7 +33,6 @@ def evaluate(agent: nn.Module, env: gym.Env,
     stats["average_return"] = np.mean(returns)
     if env.spec.name in ['pen-binary', 'door-binary', 'relocate-binary']:
         stats["goal_achieved_rate"] = np.mean(goal_achieved)
-        print(f"Goal achieved rate: {stats['goal_achieved_rate']}")
     else:
         stats["average_normalizd_return"] = np.mean([env.get_normalized_score(ret) for ret in returns])
 

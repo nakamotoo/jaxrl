@@ -18,9 +18,10 @@ def make_env_and_dataset(env_name: str, seed: int, dataset_name: str,
         dataset = D4RLDataset(env)
     elif 'awac' in dataset_name:
         dataset = AWACDataset(env_name)
-    elif 'adroit' in dataset_name:
+    elif dataset_name == 'adroit':
+        dataset= AdroitBinaryDataset(env)
+    elif dataset_name == 'adroit-trunc':
         dataset = AdroitBinaryTruncDataset(env)
-        # dataset= AdroitBinaryDataset(env)
     elif 'rl_unplugged' in dataset_name:
         dataset = RLUnpluggedDataset(env_name.replace('-', '_'))
     else:
