@@ -24,12 +24,9 @@ def make_env(env_name: str,
     all_envs = gym.envs.registry.all()
     env_ids = [env_spec.id for env_spec in all_envs]
 
-    if env_name in env_ids:
-        if 'kitchen' in env_name:
-            print("max_episode_steps", 1000)
-            env = gym.make(env_name, max_episode_steps=1000)
-        else:
-            env = gym.make(env_name)
+    if env_name in env_ids:       
+        env = gym.make(env_name)
+        print("max_episode_steps", env.spec.max_episode_steps)
     else:
         domain_name, task_name = env_name.split('-')
         env = wrappers.DMCEnv(domain_name=domain_name,
