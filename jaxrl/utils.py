@@ -5,6 +5,7 @@ from gym.wrappers import RescaleAction
 from gym.wrappers.pixel_observation import PixelObservationWrapper
 
 from jaxrl import wrappers
+import mj_envs
 
 
 def make_env(env_name: str,
@@ -39,8 +40,9 @@ def make_env(env_name: str,
 
     if action_repeat > 1:
         env = wrappers.RepeatAction(env, action_repeat)
-
-    env = RescaleAction(env, -1.0, 1.0)
+    
+    # uncommenting this seems to be crucial for Adroit env
+    # env = RescaleAction(env, -1.0, 1.0)
 
     if save_folder is not None:
         env = gym.wrappers.RecordVideo(env, save_folder)

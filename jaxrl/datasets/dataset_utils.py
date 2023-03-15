@@ -3,6 +3,7 @@ from typing import Tuple
 import gym
 
 from jaxrl.datasets.awac_dataset import AWACDataset
+from jaxrl.datasets.adroit_dataset import AdroitBinaryTruncDataset, AdroitBinaryDataset
 from jaxrl.datasets.d4rl_dataset import D4RLDataset
 from jaxrl.datasets.dataset import Dataset
 from jaxrl.datasets.rl_unplugged_dataset import RLUnpluggedDataset
@@ -17,6 +18,9 @@ def make_env_and_dataset(env_name: str, seed: int, dataset_name: str,
         dataset = D4RLDataset(env)
     elif 'awac' in dataset_name:
         dataset = AWACDataset(env_name)
+    elif 'adroit' in dataset_name:
+        dataset = AdroitBinaryTruncDataset(env)
+        # dataset= AdroitBinaryDataset(env)
     elif 'rl_unplugged' in dataset_name:
         dataset = RLUnpluggedDataset(env_name.replace('-', '_'))
     else:

@@ -61,7 +61,7 @@ class AWACLearner(object):
                  state_dependent_std: bool = False,
                  critic_lr: float = 3e-4,
                  critic_hidden_dims: Sequence[int] = (256, 256),
-                 num_samples: int = 1,
+                 num_samples: int = 10,
                  discount: float = 0.99,
                  tau: float = 0.005,
                  target_update_period: int = 1,
@@ -83,6 +83,10 @@ class AWACLearner(object):
             action_dim,
             state_dependent_std=state_dependent_std,
             tanh_squash_distribution=False)
+        # actor_def = policies.GaussianPolicy(
+        #     actor_hidden_dims,
+        #     action_dim,
+        #     state_dependent_std=state_dependent_std)
         actor = Model.create(actor_def,
                              inputs=[actor_key, observations],
                              tx=optax.adamw(**actor_optim_kwargs))

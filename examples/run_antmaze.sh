@@ -1,18 +1,17 @@
 #!/bin/bash
 export XLA_PYTHON_CLIENT_PREALLOCATE=False
-export CUDA_VISIBLE_DEVICES=4
+export CUDA_VISIBLE_DEVICES=3
 export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 # export WANDB_DISABLED=True
 
-# env=antmaze-medium-play-v2
-# env=antmaze-medium-diverse-v2
-# env=antmaze-large-play-v2
+env=antmaze-medium-play-v2
+env=antmaze-medium-diverse-v2
+env=antmaze-large-play-v2
 env=antmaze-large-diverse-v2
 
 # 4 5 6
 # for seed in 1 2 3
 for seed in 4 5 6
-
 do
 python train_finetuning.py \
 --env_name=$env \
@@ -24,5 +23,6 @@ python train_finetuning.py \
 --num_pretraining_steps=1000000 \
 --eval_interval=50000 \
 --eval_episodes=50 \
---logging.project=AWAC-antmaze
+--logging.project=AWAC-antmaze-rerun \
+--config.beta=1.0
 done

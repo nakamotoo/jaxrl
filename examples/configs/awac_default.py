@@ -20,10 +20,10 @@ def get_config():
     config.tau = 0.005
     config.target_update_period = 1
 
-    config.beta = 2.0
+    config.beta = 0.3
 
     config.num_samples = 1
 
-    config.replay_buffer_size = 2000000
+    config.replay_buffer_size = 1000000
 
     return config

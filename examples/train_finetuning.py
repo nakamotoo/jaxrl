@@ -13,7 +13,7 @@ from jaxrl.utils import make_env, WandBLogger, get_user_flags
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string('env_name', 'HalfCheetah-v2', 'Environment name.')
-flags.DEFINE_enum('dataset_name', 'awac', ['d4rl', 'awac'], 'Dataset name.')
+flags.DEFINE_enum('dataset_name', 'awac', ['d4rl', 'awac', 'adroit'], 'Dataset name.')
 flags.DEFINE_string('save_dir', './tmp/', 'Tensorboard logging dir.')
 flags.DEFINE_integer('seed', 42, 'Random seed.')
 flags.DEFINE_integer('eval_episodes', 50,

@@ -29,6 +29,7 @@ def update(key: PRNGKey, actor: Model, critic: Model, batch: Batch,
         # softmax(a / beta) is biased but lower variance.
         # sum() instead of mean(), because it should be multiplied by batch size.
         actor_loss = -(jax.nn.softmax(a / beta) * log_probs).sum()
+        # actor_loss = -(jnp.exp(a/ beta) * log_probs).mean()
 
         return actor_loss, {'actor_loss': actor_loss}
 
