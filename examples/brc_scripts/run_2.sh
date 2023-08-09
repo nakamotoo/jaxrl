@@ -45,7 +45,7 @@ singularity exec --userns --nv -B /usr/lib64 -B /var/lib/dcv-gl --overlay /globa
     --eval_episodes=10 \
     --logging.project=$PROJECT_NAME \
     --config.beta=1.0 \
-    --config.replay_buffer_size=3e6
+    --config.replay_buffer_size=3000000
 "
 }
 
