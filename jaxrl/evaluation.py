@@ -11,6 +11,8 @@ def evaluate(agent: nn.Module, env: gym.Env,
     returns = []
     if env.spec.name in ['pen-binary', 'door-binary', 'relocate-binary']:
         goal_achieved = []
+    if 'kitchen' in env.spec.name:
+        num_stage_solved = []
     for _ in range(num_episodes):
         observation, done = env.reset(), False
         rewards = []
@@ -20,6 +22,9 @@ def evaluate(agent: nn.Module, env: gym.Env,
             observation, rew, done, info = env.step(action)
             rewards.append(rew)
             infos.append(info)
+
+        if 'kitchen' in env.spec.name:
+            num_stage_solved.append(rew)
 
         for k in stats.keys():
             stats[k].append(info['episode'][k])
@@ -35,5 +40,8 @@ def evaluate(agent: nn.Module, env: gym.Env,
         stats["goal_achieved_rate"] = np.mean(goal_achieved)
     else:
         stats["average_normalizd_return"] = np.mean([env.get_normalized_score(ret) for ret in returns])
+
+    if 'kitchen' in env.spec.name:
+        stats["num_stage_solved"] = np.mean(num_stage_solved)
 
     return stats
