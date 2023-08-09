@@ -23,5 +23,6 @@ python train_finetuning.py \
 --eval_interval=50000 \
 --eval_episodes=10 \
 --logging.project=0809-AWAC-locomotion \
---config.beta=1.0
+--config.beta=1.0 \
+--config.replay_buffer_size=3e6
 done
