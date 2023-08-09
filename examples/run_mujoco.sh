@@ -5,7 +5,8 @@ export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 # export WANDB_DISABLED=True
 
 # halfcheetah-expert-v2, halfcheetah-medium-expert-v2, halfcheetah-medium-replay-v2, halfcheetah-medium-v2, halfcheetah-random-v2
-
+# walker2d-expert-v2, walker2d-medium-expert-v2, walker2d-medium-replay-v2, walker2d-medium-v2, walker2d-random-v2
+# hopper-expert-v2, hopper-medium-expert-v2, hopper-medium-replay-v2, hopper-medium-v2, hopper-random-v2
 env=halfcheetah-random-v2
 # 4 5 6
 # for seed in 1 3 5
