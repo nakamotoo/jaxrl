@@ -20,7 +20,7 @@ def get_config():
     config.tau = 0.005
     config.target_update_period = 1
 
-    config.beta = 0.3
+    config.beta = 1.0
 
     config.num_samples = 1
 
